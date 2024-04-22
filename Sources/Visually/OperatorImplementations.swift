@@ -255,6 +255,8 @@ private func constrainingFunction<AnchorType>(for relation: LayoutRelation) -> (
         return { (lAnchor, rAnchor, constant) in
             return lAnchor.constraint(greaterThanOrEqualTo: rAnchor, constant: constant)
         }
+    @unknown default:
+        fatalError()
     }
 }
 

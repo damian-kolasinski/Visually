@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = "9.0"
 
   s.source       = { :git => "https://github.com/lukkas/Visually.git", :tag => "#{s.version}" }
-  s.source_files  = "Visually"
+  s.source_files  = "Sources/Visually"
 
   s.ios.framework = "UIKit"
   s.osx.framework = "AppKit"

@@ -14,16 +14,16 @@ import AppKit
 #endif
 
 public extension Constrainable {
-    public subscript(_ value: CGFloat) -> BuildPoint {
+    subscript(_ value: CGFloat) -> BuildPoint {
         return self[ConstraintParameters(constant: value, priority: .required)]
     }
     
-    public subscript(_ value: ConstraintParameters) -> BuildPoint {
+    subscript(_ value: ConstraintParameters) -> BuildPoint {
         let sizeBuildPoint = SizeBuildPoint(parameters: value, relation: .equal)
         return self[sizeBuildPoint]
     }
     
-    public subscript(_ sizeBuildPoint: SizeBuildPoint) -> BuildPoint {
+    subscript(_ sizeBuildPoint: SizeBuildPoint) -> BuildPoint {
         let constraint: Constraint = { (axis, _) in
             switch axis {
             case .horizontal:
@@ -46,22 +46,24 @@ public extension Constrainable {
                 return dimension.constraint(greaterThanOrEqualToConstant: constant)
             case .lessThanOrEqual:
                 return dimension.constraint(lessThanOrEqualToConstant: constant)
+            @unknown default:
+                fatalError()
             }
         }()
         constraint.priority = sizeBuildPoint.parameters.priority
         return constraint
     }
     
-    public subscript(_ percent: Percent) -> BuildPoint {
+    subscript(_ percent: Percent) -> BuildPoint {
         return self[RelativeConstraintParameters(multiplier: percent.decimal, priority: .required)]
     }
     
-    public subscript(_ value: RelativeConstraintParameters) -> BuildPoint {
+    subscript(_ value: RelativeConstraintParameters) -> BuildPoint {
         let sizeBuildPoint = RelativeSizeBuildPoint(parameters: value, relation: .equal)
         return self[sizeBuildPoint]
     }
     
-    public subscript(_ sizeBuildPoint: RelativeSizeBuildPoint) -> BuildPoint {
+    subscript(_ sizeBuildPoint: RelativeSizeBuildPoint) -> BuildPoint {
         guard let superview = superview else {
             throwMissingSuperviewException()
         }
@@ -92,6 +94,8 @@ public extension Constrainable {
                 return dimension.constraint(greaterThanOrEqualTo: superviewDimension, multiplier: multiplier)
             case .lessThanOrEqual:
                 return dimension.constraint(lessThanOrEqualTo: superviewDimension, multiplier: multiplier)
+            @unknown default:
+                fatalError()
             }
         }()
         constraint.priority = relativeSizeBuildPoint.parameters.priority

@@ -15,7 +15,7 @@ import AppKit
 
 #if os(iOS) || os(tvOS)
 public typealias View = UIView
-public typealias LayoutRelation = NSLayoutRelation
+public typealias LayoutRelation = NSLayoutConstraint.Relation
 public typealias LayoutPriority = UILayoutPriority
 public typealias LayoutGuide = UILayoutGuide
 #elseif os(OSX)
